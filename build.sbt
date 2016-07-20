@@ -1,6 +1,6 @@
 import com.typesafe.sbt.packager.docker.Cmd
 
-name := """actyx-dashboard"""
+name := """haghard/actyx-dashboard"""
 
 scalaVersion := "2.11.8"
 
