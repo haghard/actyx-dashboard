@@ -13,7 +13,7 @@ class AlertGuardian(conf: play.api.Configuration, override val bufferSize: Int) 
   with KafkaSupport {
   val cassandraPort = conf.getInt("cassandra-port").get
   val keySpace = conf.getString("cassandra-keyspace").get
-  val cassandraHosts = conf.getString("cassandra").get.split(",").map(new InetSocketAddress(_, cassandraPort))
+  val cassandraHosts = conf.getString("cassandra").get.split(",").toSeq.map(new InetSocketAddress(_, cassandraPort))
   val query = conf.getString("cassandra-ma-query").get
 
   override val kafkaUrl = conf.getString("kafka.consumer.url").get
