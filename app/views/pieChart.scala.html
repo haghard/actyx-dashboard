@@ -1,0 +1,15 @@
+@(devices: Set[String])
+
+<script>
+
+    var filter = new Set();
+    var source = [];
+
+    @for(e <- devices) {
+      filter.add("@e");
+      source.push({ key: "@e", y: 0 });
+    }
+
+</script>
+
+<svg id="pie" class="pieChart" align=left></svg>

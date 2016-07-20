@@ -1,0 +1,14 @@
+@(devices: Seq[String])
+
+<div class="devices">
+    <table class="table">
+      <caption>Registered devices</caption>
+        <tbody>
+            @for(e <- devices) {
+                <tr>
+                    <td><span class="tableEntry" style="font-size: 10px">@e</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
