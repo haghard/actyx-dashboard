@@ -1,6 +1,6 @@
 import com.typesafe.sbt.packager.docker.Cmd
 
-name := """haghard/actyx-dashboard"""
+name := """actyx-dashboard"""
 
 scalaVersion := "2.11.8"
 
@@ -31,6 +31,7 @@ routesGenerator := InjectedRoutesGenerator
 // build with activator docker:publishLocal
 
 maintainer := "haghard"
+dockerRepository := Option("haghard")
 dockerExposedPorts in Docker := Seq(8081)
 dockerBaseImage := "frolvlad/alpine-oraclejdk8:latest"
 
