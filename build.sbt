@@ -32,7 +32,6 @@ routesGenerator := InjectedRoutesGenerator
 
 maintainer := "haghard"
 dockerRepository := Option("haghard")
-dockerExposedPorts in Docker := Seq(8081)
 dockerBaseImage := "frolvlad/alpine-oraclejdk8:latest"
 
 dockerCommands := dockerCommands.value.flatMap {
