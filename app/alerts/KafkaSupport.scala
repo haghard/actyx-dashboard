@@ -1,6 +1,5 @@
 package alerts
 
-import java.util.Date
 import akka.kafka.{ Subscriptions, ConsumerSettings}
 import akka.kafka.scaladsl.Consumer
 import akka.stream.actor.ActorSubscriber
@@ -86,7 +85,11 @@ trait KafkaSupport extends CassandraSupport {
 
           //To query db on every alert isn't efficient so that we can cache them
           result <- args._1.executeAsync(args._2.bind(queryParams._1, queryParams._2,
-            Date.from(queryParams._3.minusSeconds(aggregateTimeGapSec).toInstant), Date.from(queryParams._3.toInstant))).asScala
+            Long.box(queryParams._3.minusSeconds(aggregateTimeGapSec).toInstant.toEpochMilli),
+            Long.box(queryParams._3.toInstant.toEpochMilli)
+            //Date.from(queryParams._3.minusSeconds(aggregateTimeGapSec).toInstant),
+            //Date.from(queryParams._3.toInstant))
+          )).asScala
 
           _ <- message.committableOffset.commitScaladsl
         } yield {
