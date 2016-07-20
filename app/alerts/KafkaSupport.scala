@@ -79,9 +79,11 @@ trait KafkaSupport extends CassandraSupport {
             val timeBucket = (tbFormatter format r.when)
             val eventTime = r.when
             //Thread.sleep(100)
-            //log.debug(r.deviceId)
+            log.debug("ts " + eventTime.toInstant.toEpochMilli)
             (r.deviceId, timeBucket, eventTime, r.current, r.threshold)
           }
+
+          //log.debug(queryParams._3.toInstant.toEpochMilli)
 
           //To query db on every alert isn't efficient so that we can cache them
           result <- args._1.executeAsync(args._2.bind(queryParams._1, queryParams._2,
