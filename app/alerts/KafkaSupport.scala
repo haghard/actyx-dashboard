@@ -80,6 +80,7 @@ trait KafkaSupport extends CassandraSupport {
             val r = Json.parse(message.value).as[Reading]
             val timeBucket = (tbFormatter format r.when)
             val eventTime = r.when
+            log.debug("{}", r.deviceId)
             //Thread.sleep(100)
             (r.deviceId, timeBucket, eventTime, r.current, r.threshold)
           }

@@ -20,6 +20,7 @@ libraryDependencies ++= Seq(
   "org.webjars"            %  "flot"      % "0.8.3",
   "com.datastax.cassandra" %  "cassandra-driver-core"  %  "3.0.1",
   "com.typesafe.akka"      %% "akka-stream-kafka" % "0.11-M4",
+  "com.github.levkhomich"  %% "akka-tracing-play" % "0.5",
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
 
