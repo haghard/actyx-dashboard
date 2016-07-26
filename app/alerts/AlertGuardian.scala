@@ -3,14 +3,12 @@ package alerts
 import akka.actor._
 import java.net.InetSocketAddress
 import alerts.WsServer.Subscribe
-import scala.collection.JavaConverters._
 
 object AlertGuardian {
   def props(conf: play.api.Configuration, bufferSize: Int) = Props(new AlertGuardian(conf, bufferSize))
 }
 
-class AlertGuardian(conf: play.api.Configuration, override val bufferSize: Int) extends Actor with ActorLogging
-  with KafkaSupport {
+class AlertGuardian(conf: play.api.Configuration, override val bufferSize: Int) extends Actor with KafkaSupport {
   val cassandraPort = conf.getInt("cassandra-port").get
   val keySpace = conf.getString("cassandra-keyspace").get
   val cassandraHosts = conf.getString("cassandra").get.split(",").toSeq.map(new InetSocketAddress(_, cassandraPort))

@@ -19,7 +19,7 @@ import play.api.libs.json._
 import scala.concurrent.Future
 
 trait KafkaSupport extends CassandraSupport {
-  mixin: Actor with ActorLogging =>
+  mixin: Actor =>
 
   def kafkaUrl: String
 
