@@ -5,7 +5,8 @@ import play.api.libs.json.JsObject
 import akka.actor.{ActorLogging, Props, ActorRef, Actor}
 
 object WebSocketSession {
-  def props(webSocketSource: ActorRef) = Props(new WebSocketSession(webSocketSource))
+  def props(webSocketSource: ActorRef) =
+    Props(new WebSocketSession(webSocketSource))
 }
 
 class WebSocketSession(wsSource: ActorRef) extends Actor with ActorLogging {

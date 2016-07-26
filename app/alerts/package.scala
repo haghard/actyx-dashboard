@@ -19,14 +19,23 @@ package object alerts {
 
   val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z")
 
-  case class Reading(deviceId: String, current: Double, threshold: Double, when: ZonedDateTime, name: String, `type`: String, state: String)
+  case class Reading(deviceId: String,
+                     current: Double,
+                     threshold: Double,
+                     when: ZonedDateTime,
+                     name: String,
+                     `type`: String,
+                     state: String)
 
   implicit val reads: Reads[Reading] = (
-    (JsPath \ "device_id").read[String] and (JsPath \ "current").read[Double] and (JsPath \ "current_alert").read[Double]
-      and (JsPath \ "timestamp").read[String].map(ZonedDateTime.parse(_, formatter))
-      and (JsPath \ "name").read[String] and (JsPath \ "type").read[String] and (JsPath \ "state").read[String]
-    )(Reading.apply _)
-
+      (JsPath \ "device_id").read[String] and (JsPath \ "current")
+        .read[Double] and (JsPath \ "current_alert").read[Double]
+        and (JsPath \ "timestamp")
+          .read[String]
+          .map(ZonedDateTime.parse(_, formatter))
+        and (JsPath \ "name").read[String] and (JsPath \ "type")
+        .read[String] and (JsPath \ "state").read[String]
+  )(Reading.apply _)
 
   implicit class FutureOpts[T](lf: ListenableFuture[T]) {
     def asScala: Future[T] = {
