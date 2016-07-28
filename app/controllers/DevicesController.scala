@@ -9,8 +9,9 @@ import scala.concurrent.ExecutionContext
 import scala.collection.JavaConverters._
 
 @Singleton
-class DevicesController @Inject()(val conf: play.api.Configuration)
-                                 (implicit ec: ExecutionContext) extends Controller {
+class DevicesController @Inject()(val conf: play.api.Configuration)(
+    implicit ec: ExecutionContext)
+    extends Controller {
   def index = Action { implicit request =>
     Ok(views.html.devices(conf.getStringList("devices").get.asScala.toSeq))
   }

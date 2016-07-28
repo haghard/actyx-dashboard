@@ -44,7 +44,7 @@ draw = (js, source) ->
       .call(pieChart)
 
 renderPieChart = (js, filter) ->
-  console.log("in", js.deviceId)
+  #console.log("in", js.deviceId)
   if(filter.has(js.deviceId))
     for elem in source
       if elem.key == js.deviceId

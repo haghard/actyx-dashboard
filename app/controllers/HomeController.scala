@@ -7,8 +7,14 @@ import akka.actor.ActorSystem
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class HomeController @Inject()(ac: AlertsController, dc: DevicesController, cc: ChartController)
-                              (implicit as: ActorSystem, mat: akka.stream.Materializer, ec: ExecutionContext) extends Controller with HtmlReader {
+class HomeController @Inject()(ac: AlertsController,
+                               dc: DevicesController,
+                               cc: ChartController)(
+    implicit as: ActorSystem,
+    mat: akka.stream.Materializer,
+    ec: ExecutionContext)
+    extends Controller
+    with HtmlReader {
 
   def index = Action.async { implicit request =>
     for {

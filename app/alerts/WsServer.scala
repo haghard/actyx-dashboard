@@ -9,13 +9,16 @@ import akka.stream.actor.ActorSubscriberMessage.{OnComplete, OnError, OnNext}
 
 object WsServer {
   case class Subscribe(actor: ActorRef)
-  def props(guardianActor: ActorRef, bufferSize: Int) = Props(new WsServer(guardianActor, bufferSize))
+  def props(guardianActor: ActorRef, bufferSize: Int) =
+    Props(new WsServer(guardianActor, bufferSize))
 }
 
-class WsServer(guardianActor: ActorRef, bufferSize: Int) extends ActorSubscriber {
+class WsServer(guardianActor: ActorRef, bufferSize: Int)
+    extends ActorSubscriber {
   var wsClient = HashSet.empty[ActorRef]
 
-  override val requestStrategy = WatermarkRequestStrategy(bufferSize, bufferSize - 5)
+  override val requestStrategy =
+    WatermarkRequestStrategy(bufferSize, bufferSize - 5)
 
   override def receive: Receive = {
     case Subscribe(actor) =>
