@@ -3,7 +3,6 @@ package alerts
 import akka.actor._
 import java.net.InetSocketAddress
 import alerts.WsServer.Subscribe
-import scala.collection.JavaConverters._
 
 object AlertGuardian {
   def props(conf: play.api.Configuration, bufferSize: Int) =
