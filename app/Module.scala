@@ -1,3 +1,4 @@
+import akka.cluster.Cluster
 import com.google.inject.AbstractModule
 import java.time.Clock
 

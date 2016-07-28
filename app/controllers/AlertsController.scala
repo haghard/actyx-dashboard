@@ -4,6 +4,7 @@ import javax.inject.{Inject, Singleton}
 
 import akka.NotUsed
 import akka.actor.{ActorRef, ActorSystem}
+import akka.cluster.Cluster
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
 import alerts.WsServer.Subscribe
@@ -21,6 +22,11 @@ class AlertsController @Inject()(val conf: play.api.Configuration)(
     mat: Materializer,
     ec: ExecutionContext)
     extends Controller {
+  val cluster = Cluster(system)
+  val hostname = conf.underlying.getString("akka.remote.netty.tcp.hostname")
+  val port = conf.underlying.getInt("akka.remote.netty.tcp.port")
+  Logger.info(s"★ ★ ★ ★ ★ ★  $hostname:$port  ★ ★ ★ ★ ★ ★")
+
   val bufferSize = conf.getInt("buffer.size").getOrElse(1 << 8)
   val guardian =
     system.actorOf(AlertGuardian.props(conf, bufferSize), "guardian")

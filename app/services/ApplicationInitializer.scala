@@ -9,8 +9,12 @@ import scala.concurrent.Future
 @Singleton
 class ApplicationInitializer @Inject()(clock: Clock,
                                        appLifecycle: ApplicationLifecycle,
-                                       conf: Configuration) {
+                                       conf: Configuration) extends SystemProps {
   val start: Instant = clock.instant
+
+  //val opts = argsToOpts(args.toSeq)
+  //applySystemProps(opts)
+  //-Dakka.cluster.seed-nodes
 
   Logger.info(s"Starting application at $start")
 
