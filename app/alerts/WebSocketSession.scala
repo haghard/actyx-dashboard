@@ -6,7 +6,8 @@ import akka.actor.{ActorLogging, Props, ActorRef, Actor}
 
 object WebSocketSession {
   def props(webSocketSource: ActorRef) =
-    Props(new WebSocketSession(webSocketSource)).withDispatcher("ws-dispatcher")
+    Props(new WebSocketSession(webSocketSource))
+      .withDispatcher("ws-dispatcher")
 }
 
 class WebSocketSession(wsSource: ActorRef) extends Actor with ActorLogging {
