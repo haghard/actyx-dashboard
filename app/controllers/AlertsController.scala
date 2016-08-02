@@ -25,7 +25,8 @@ class AlertsController @Inject()(val conf: play.api.Configuration)(
   val cluster = Cluster(system)
   val hostname = conf.underlying.getString("akka.remote.netty.tcp.hostname")
   val port = conf.underlying.getInt("akka.remote.netty.tcp.port")
-  Logger.info(s"★ ★ ★ ★ ★ ★  $hostname:$port  ★ ★ ★ ★ ★ ★")
+  val httpPort = conf.underlying.getInt("http.port")
+  Logger.info(s"★ ★ ★ ★ ★ ★ Akka-system $hostname:$port Http: $httpPort ★ ★ ★ ★ ★ ★")
 
   val bufferSize = conf.getInt("buffer.size").getOrElse(1 << 8)
   val guardian =
