@@ -9,7 +9,8 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class HomeController @Inject()(ac: AlertsController,
                                dc: DevicesController,
-                               cc: ChartController)(
+                               cc: ChartController,
+                               mc: SpotsController)(
     implicit as: ActorSystem,
     mat: akka.stream.Materializer,
     ec: ExecutionContext)
@@ -21,9 +22,11 @@ class HomeController @Inject()(ac: AlertsController,
       alerts <- ac.index(request)
       devices <- dc.index(request)
       chart <- cc.index(request)
+      spots <- mc.index(request)
       alertsHtml <- readBody(alerts)
       devicesHtml <- readBody(devices)
       chartHtml <- readBody(chart)
-    } yield Ok(views.html.index(alertsHtml, devicesHtml, chartHtml))
+      sportHtml <- readBody(spots)
+    } yield Ok(views.html.index(alertsHtml, devicesHtml, chartHtml, sportHtml))
   }
 }

@@ -15,6 +15,13 @@ class ChartController @Inject()(val conf: play.api.Configuration)(
     ec: ExecutionContext)
     extends Controller {
   def index = Action { implicit request =>
-    Ok(views.html.pieChart(conf.getStringList("devices").get.asScala.toSet))
+    val devices = conf.underlying
+      .getObjectList("devices")
+      .asScala
+      .map { cfg =>
+        cfg.toConfig.getString("id")
+      }
+      .toSet
+    Ok(views.html.pieChart(devices))
   }
 }
