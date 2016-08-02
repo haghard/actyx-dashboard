@@ -11,9 +11,7 @@ class DevicesController @Inject()(val conf: play.api.Configuration)(
     extends Controller {
 
   def index = Action { implicit request =>
-    val ids = conf.underlying.getObjectList("devices").asScala.toSeq.map {
-      _.get("id").render()
-    }
+    val ids = conf.underlying.getObjectList("devices").asScala.toSeq.map { _.toConfig.getString("id") }
     Ok(views.html.devices(ids))
   }
 }
