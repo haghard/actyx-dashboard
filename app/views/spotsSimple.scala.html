@@ -1,0 +1,50 @@
+@(keyApi: String)
+
+<script>
+  var map;
+  function createMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 51.418465808131506, lng: 13.310365405678749 },
+      zoom: 10
+    });
+
+    $.get('/api/spots', function(spots) {
+      var array = spots[0]
+      for (var i in array) {
+        addMarker(array[i]);
+      }
+    });
+
+    google.maps.event.addListener(map, 'click', function(event) {
+      console.log('lat:' + event.latLng.lat() + ' lon:' + event.latLng.lng());
+    });
+  }
+
+  function addMarker(spot) {
+    console.log('AddMarker lat:' + spot.location.latitude + ' lon:' + spot.location.longitude);
+    return spot.marker = new google.maps.Marker({
+      position: toLatLng(spot),
+      map: map,
+      animation: google.maps.Animation.DROP,
+      title: spot.name
+    }).addListener('click', toggleBounce);
+
+  }
+
+  function toggleBounce() {
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+
+  function toLatLng(spot) {
+    return new google.maps.LatLng(spot.location.latitude, spot.location.longitude)
+  }
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=@keyApi&callback=createMap"
+type="text/javascript"></script>
+
+<div id="map"></div>

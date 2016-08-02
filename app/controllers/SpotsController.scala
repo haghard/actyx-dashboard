@@ -19,7 +19,7 @@ class SpotsController @Inject()(val conf: play.api.Configuration)(
   import SpotsController._
 
   def index = Action { implicit request =>
-    Ok(views.html.spots())
+    Ok(views.html.spotsSimple(conf.underlying.getString("GMAPS_API_KEY")))
   }
 
   def sport = Action.async { implicit request =>

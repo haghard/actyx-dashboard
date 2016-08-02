@@ -41,4 +41,4 @@ dockerCommands := dockerCommands.value.flatMap {
   case otherCmd =>  List(otherCmd)
 }
 
-//run -Dhttp.port=9000 -Dakka.cluster.seed=192.168.0.62:2551 -Dakka.remote.netty.tcp.port=2601 -Dakka.remote.netty.tcp.hostname=192.168.0.62
+//run -Dhttp.port=9000 -DGMAPS_API_KEY=... -Dakka.cluster.seed=192.168.0.62:2551 -Dakka.remote.netty.tcp.port=2601 -Dakka.remote.netty.tcp.hostname=192.168.0.62

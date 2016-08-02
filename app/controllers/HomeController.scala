@@ -7,7 +7,8 @@ import akka.actor.ActorSystem
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class HomeController @Inject()(ac: AlertsController,
+class HomeController @Inject()(conf: play.api.Configuration,
+                               ac: AlertsController,
                                dc: DevicesController,
                                cc: ChartController,
                                mc: SpotsController)(
