@@ -18,7 +18,7 @@
 
       function locationCallback(location) {
         var latLng = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
-        /*console.log('location: ' + latLng);*/
+        console.log('current-loc:' + latLng);
         map = new google.maps.Map(document.getElementById('map'), {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           center: latLng,
