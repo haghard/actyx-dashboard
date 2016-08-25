@@ -15,19 +15,14 @@ class AlertGuardian(conf: play.api.Configuration, override val bufferSize: Int)
     with KafkaSupport {
   val cassandraPort = conf.getInt("cassandra-port").get
   val keySpace = conf.getString("cassandra-keyspace").get
-  val cassandraHosts = conf
-    .getString("cassandra")
-    .get
-    .split(",")
-    .toSeq
+  val cassandraHosts = conf.getString("cassandra").get.split(",").toSeq
     .map(new InetSocketAddress(_, cassandraPort))
   val query = conf.getString("cassandra-ma-query").get
 
   override val kafkaUrl = conf.getString("kafka.consumer.url").get
   override val kafkaTopic = conf.getString("kafka.consumer.topic").get
   override val clientId = conf.getString("kafka.consumer.client-id").get
-  override val kafkaDispatcher =
-    conf.getString("kafka.consumer.use-dispatcher").get
+  override val kafkaDispatcher = conf.getString("kafka.consumer.use-dispatcher").get
   override val aggregateTimeGapSec = conf.getInt("aggregate-max-gap-sec").get
   override val kafkaConsumerGroup = conf.getString("kafka.consumer.group").get
 

@@ -45,8 +45,7 @@ trait KafkaSupport extends CassandraSupport { mixin: Actor with ActorLogging =>
   def consumerSettings =
     ConsumerSettings(
         context.system.settings.config.getConfig("kafka.consumer"),
-        new StringDeserializer(),
-        new StringDeserializer())
+        new StringDeserializer(), new StringDeserializer())
       .withBootstrapServers(kafkaUrl)
       .withGroupId(kafkaConsumerGroup)
       .withClientId(clientId)
@@ -73,37 +72,27 @@ trait KafkaSupport extends CassandraSupport { mixin: Actor with ActorLogging =>
           .withSupervisionStrategy(decider))(context.system)
 
     implicit val ex = materializer.executionContext
+
     Source.single {
       val session = (cassandraClient(ConsistencyLevel.LOCAL_ONE) connect keySpace)
       (session, (session prepare query))
     }.flatMapConcat { args =>
       Consumer
         .committableSource(consumerSettings, Subscriptions.topics(kafkaTopic))
-        .mapAsync(4) { message => //parallelism should be configurable
+        .mapAsync(6) { message =>  //querying parallelism should be configurable
           for {
             queryParams <- Future {
-                            val r = Json.parse(message.value).as[Reading]
+                            val r = Json.parse(message.record.value).as[Reading]
                             val timeBucket = (tbFormatter format r.when)
                             val eventTime = r.when
                             //Thread.sleep(100)
-                            (r.deviceId,
-                             timeBucket,
-                             eventTime,
-                             r.current,
-                             r.threshold)
+                            (r.deviceId, timeBucket, eventTime, r.current, r.threshold)
                           }
 
             //To query db on every alert isn't efficient so that we can cache them
-            result <- args._1
-                       .executeAsync(
-                           args._2.bind(
-                               queryParams._1,
-                               queryParams._2,
-                               Date.from(queryParams._3
-                                     .minusSeconds(aggregateTimeGapSec)
-                                     .toInstant),
-                               Date.from(queryParams._3.toInstant)))
-                       .asScala
+            result <- args._1.executeAsync(args._2.bind(queryParams._1, queryParams._2,
+                         Date.from(queryParams._3.minusSeconds(aggregateTimeGapSec).toInstant),
+                         Date.from(queryParams._3.toInstant))).asScala
 
             _ <- message.committableOffset.commitScaladsl
           } yield {
