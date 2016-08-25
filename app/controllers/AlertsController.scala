@@ -40,8 +40,7 @@ class AlertsController @Inject()(val conf: play.api.Configuration)(
     createFlow(webSrc, webSink).map(Right(_)).recover {
       case e: Exception =>
         Logger.error("Websocket creation error", e)
-        val result = InternalServerError(
-            Json.obj("error-message" -> "Cannot create websocket"))
+        val result = InternalServerError(Json.obj("error-message" -> "Cannot create websocket"))
         Left(result)
     }
   }

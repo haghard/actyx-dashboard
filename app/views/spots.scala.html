@@ -76,8 +76,7 @@
       }
 
       function removeStaleMarker() {
-        if (lastMarker) {lastMarker.setMap(null);
-        }
+        if (lastMarker) {lastMarker.setMap(null);}
       }
 
       function toLatLng(spot) {
@@ -93,34 +92,5 @@
 
   <div id="content">
     <div id="map">detecting location...</div>
-  </div>
-</div>
-<div id="editTemplate" style="display:none">
-  <div>
-    <form id="editForm" action="/api/photo-spots" method="POST">
-      <h3>New photo spot:</h3>
-      <table>
-        <tr>
-          <td>Name:</td>
-          <td>
-            <input type="text" name="name" value="${name}">
-            <input type="hidden" name="lat" value="${location.latitude}">
-            <input type="hidden" name="lon" value="${location.longitude}">
-          </td>
-        </tr>
-        <tr>
-          <td>Description:</td>
-          <td>
-            <textarea name="description">${description}</textarea>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="buttons">
-            <input type="button" onclick="saveSpot(this.form); return false;" value="Save">
-          </td>
-        </tr>
-      </table>
-    </form>
   </div>
 </div>
