@@ -5,7 +5,7 @@ name := """actyx-dashboard"""
 scalaVersion := "2.11.8"
 
 version := "0.0.2"
-val Akka  = "2.4.9"
+val Akka  = "2.4.10"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -19,8 +19,8 @@ libraryDependencies ++= Seq(
   ws,
   "org.webjars"            %  "bootstrap" % "3.3.6",
   "org.webjars"            %  "flot"      % "0.8.3",
-  "com.datastax.cassandra" %  "cassandra-driver-core"  %  "3.0.1",
-  "com.typesafe.akka"      %% "akka-stream-kafka"   % "0.11-RC1",
+  "com.datastax.cassandra" %  "cassandra-driver-core"  %  "3.1.0",
+  "com.typesafe.akka"      %% "akka-stream-kafka"   % "0.12",
   "com.typesafe.akka"      %% "akka-cluster"        % Akka,
   "org.scalatestplus.play" %% "scalatestplus-play"  % "1.5.1" % Test
 )

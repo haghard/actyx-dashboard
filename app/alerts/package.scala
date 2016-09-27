@@ -19,13 +19,7 @@ package object alerts {
 
   val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z")
 
-  case class Reading(deviceId: String,
-                     current: Double,
-                     threshold: Double,
-                     when: ZonedDateTime,
-                     name: String,
-                     `type`: String,
-                     state: String)
+  case class Reading(deviceId: String, current: Double, threshold: Double, when: ZonedDateTime, name: String, `type`: String, state: String)
 
   implicit val reads: Reads[Reading] = (
       (JsPath \ "device_id").read[String] and (JsPath \ "current")
