@@ -1,11 +1,11 @@
 import com.typesafe.sbt.packager.docker.Cmd
 
-name := """actyx-dashboard"""
+name := """dashboard"""
 
 scalaVersion := "2.11.8"
 
 version := "0.0.2"
-val Akka  = "2.4.10"
+val Akka  = "2.4.11"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
